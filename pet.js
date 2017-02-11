@@ -23,7 +23,7 @@ function run(args) {
   if (data.indexOf('\r') > -1) { 
     try {
       var result = app.displayDialog(
-        '以下の内容を貼り付けてもよろしいですか？',
+        '以下の内容をペーストしてよろしいですか？',
         {
           'withTitle': 'pet',
           'defaultAnswer': data,
@@ -40,13 +40,9 @@ function run(args) {
     }
   }
 
-  // writeを使ってターミナルに書き込む
-  var session = iterm.currentWindow.currentSession;
-  session.write(
-    {
-      text: data,
-    }
-  );
+  // キーストローク経由でペーストする
+  iterm.activate();
+  systemEvents.keystroke("_", {using:"command down"});
   
   return true;
 }
