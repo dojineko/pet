@@ -17,7 +17,9 @@ function run(args) {
     return false;
   }
 
-  var data = app.theClipboard({'as': 'string'});
+  // 末尾の改行は削除してクリップボードを更新しておく
+  var data = app.theClipboard({'as': 'string'}).trim();
+  app.setTheClipboardTo(data);
 
   // 改行コードが有る場合はユーザーに問い合わせる
   if (data.indexOf('\r') > -1) { 
