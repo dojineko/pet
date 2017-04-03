@@ -1,13 +1,17 @@
 "use strict";
 
 function run(args) {
+  var debug = false;
+
   var app = Application.currentApplication();
-  app.includeStandardAdditions = true;
-  var iterm = app;
   if (/^iTerm/.test(app.properties().name) == false) {
-    iterm = Application('iTerm');
-    iterm.includeStandardAdditions = true;
+    if (debug == true) {
+      app = Application('iTerm');
+    } else {
+      return false;
+    }
   }
+  app.includeStandardAdditions = true;
 
   var systemEvents = Application('System Events');
   systemEvents.includeStandardAdditions = true;
@@ -43,7 +47,7 @@ function run(args) {
   }
 
   // キーストローク経由でペーストする
-  iterm.activate();
+  app.activate();
   systemEvents.keystroke("_", {using:"command down"});
   
   return true;
